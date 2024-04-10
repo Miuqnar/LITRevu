@@ -1,9 +1,42 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 
-<h1>Se connecter</h1>
+<div class="container">
+    
+    {% comment %} Section s'inscrirer {% endcomment %}
+    <div class="signup-container-rediredirect">
+    
+        <h2>Inscrivez-vous maintenant:</h2>
+        <div class="signup-container-rediredirect-a">
+            <a href="{% url 'signup' %}">S'inscrire</a>
+        </div>
+    
+    </div>
+    {% comment %} endsection {% endcomment %}
+    
+    
+    {% comment %} Section se connecter {% endcomment %}
+    <div class="container_login">
+        
+        <h2>Connectez-vous</h2>
+        <form action="" method="post">
 
+            {{ message }}
 
+            {{ form.as_p }}
+            {% csrf_token %}
+
+        <div class="button-content">
+            <button type="submit">Se connecter</button>
+        </div>
+        </form>
+
+    </div>
+    {% comment %} endsection {% endcomment %}
+
+    
+</div>
 
 {% endblock content %}

@@ -1,0 +1,118 @@
+*, 
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html{
+    color: #f1f1f1;
+    height: 100%;
+    margin: 0 auto;
+    max-width: 1100px;
+    background: #111;
+    border-right: 1px solid #f1f1f14f;
+    border-left: 1px solid #f1f1f14f;
+    font-family: Montserrat, Helvetica, sans-serif;
+}
+
+.container{
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 clamp(10px, 12vw, 120px);
+}
+.title_page_base{
+    text-align: center;
+    padding: 2rem 0 0;
+    font-size: clamp(18px, 4vw, 20px);
+}
+/* Container signup */
+.signup-container-rediredirect h2{
+    font-size: clamp(18px, 4vw, 26px);
+    margin: 0 0 16px;
+}
+.signup-container-rediredirect-a{
+    display: flex;
+    justify-content: center;
+}
+.signup-container-rediredirect a{
+    color: #f1f1f1;
+    text-align: center;
+    list-style: none;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    transition: .5s all;
+}
+.signup-container-rediredirect a:hover{
+    background: #0466cf;
+}
+.signup-container {
+    display: flex;
+    justify-content: center;
+}
+.signup-container {
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.signup-container form h2{
+    text-align: center;
+    padding: clamp(10px, 0%, 20px) 0 20px;
+    font-size: clamp(16px, 2vw, 28px);
+}
+.rediredirect-login{
+    text-align: center;
+    padding-top: 20px;
+    font-size: clamp(15px, 2vw, 18px);
+}
+.signup-container p a{
+    list-style: none;
+    color: #f1f1f1;
+}
+
+/* Container login */
+.container_login h2{
+    text-align: center;
+    padding: clamp(10px, 0%, 20px) 0 20px;
+    font-size: clamp(16px, 2vw, 20px);
+}
+
+.container_login, 
+.signup-containe, 
+form p select, input{
+    width: 340px;
+    outline: none;
+    margin: .3rem 0;
+    padding: 10px 10px ;
+    border-radius: 8px;
+    border: 1px solid #111;
+}
+.signup-button-content, 
+.button-content{
+    display: flex;
+    justify-content: center;
+    padding: clamp(10px, 0%, 20px) 0 0;
+}
+.signup-button-content button, 
+.container_login
+button{
+    color: #f1f1f1;
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    cursor: pointer;
+    transition: .5s all;
+    font-size: clamp(14px, 2vw, 16px);
+}
+.signup-button-content button:hover,
+.container_login button:hover{
+    background: #0466cf;
+}
