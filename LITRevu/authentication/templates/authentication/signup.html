@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+{% if form.errors %}
+    {{ form.errors }}
+
+{% endif %}
+
+<div class="signup-container">
+
+    <form action="" method="post">
+        <h2>Inscription</h2>
+    
+        {{ form.as_p }}
+        {% csrf_token %}
+    
+        <div class="signup-button-content">
+            <button type="submit">S'inscrire</button>
+        </div>
+        <p class="rediredirect-login"><a class href="{% url 'login' %}">Revenir à la page se connecter</a></p>
+    </form>
+    
+</div>
+
+{% endblock content %}
