@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.user'
 
-# Restreignez l’accès à la page d’accueil
+# Restreigner l’accès à la page d’accueil
 LOGIN_URL = 'login'
 
 LOGIN_REDIRECT_URL = 'home'

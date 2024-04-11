@@ -11,23 +11,35 @@ body, html{
     height: 100%;
     margin: 0 auto;
     max-width: 1100px;
-    background: #111;
+    background: #051923;
     border-right: 1px solid #f1f1f14f;
     border-left: 1px solid #f1f1f14f;
     font-family: Montserrat, Helvetica, sans-serif;
 }
 
-.container{
-    height: 60%;
+.Content-menu-base{
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 0 clamp(10px, 12vw, 120px);
+    justify-content: space-between;
+    padding: 1.2rem 32px ;
+    background-color: #1d3557;
+    box-shadow: 5px 5px 5px 5px #0b1222;
 }
-.title_page_base{
-    text-align: center;
-    padding: 2rem 0 0;
+.Content-menu-base_item{
+    display: flex;
+}
+.Content-menu-base p a{
+    color: #f1f1f1;
+    margin: 0 15px;
+    list-style: none;
+    text-decoration: none;
+    font-size: clamp(14px, 2vw, 16px);
+}
+.title_page_base a{
+    color: #f1f1f1;
     font-size: clamp(18px, 4vw, 20px);
+    list-style: none;
+    text-decoration: none;
+
 }
 /* Container signup */
 .signup-container-rediredirect h2{
@@ -77,13 +89,23 @@ body, html{
 }
 
 /* Container login */
+.container{
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 clamp(10px, 12vw, 120px);
+}
+
+
 .container_login h2{
     text-align: center;
-    padding: clamp(10px, 0%, 20px) 0 20px;
+    padding: clamp(10px, 0%, 10px) 0 10px;
     font-size: clamp(16px, 2vw, 20px);
 }
 
-.container_login, 
+#id_username,
+#id_password, 
 .signup-containe, 
 form p select, input{
     width: 340px;
