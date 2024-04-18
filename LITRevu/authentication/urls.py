@@ -1,6 +1,8 @@
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
-from LITRevu.authentication.views import LoginPageView, SignupPageView, LogoutView
+
+from LITRevu.authentication.views import LoginPageView, SignupPageView
 
 urlpatterns = [
     path('login/', LoginPageView.as_view(), name='login'),

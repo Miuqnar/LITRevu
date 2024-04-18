@@ -23,9 +23,11 @@
         <h2>Connectez-vous</h2>
         <form action="" method="post">
 
-            {{ message }}
-            {{ form.as_p }}
-            {% csrf_token %}
+            <div class="container_login-inputLabel">
+                {{ message }}
+                {{ form.as_p }}
+                {% csrf_token %}
+            </div>
 
             <div class="button-content">
                 <button type="submit">Se connecter</button>

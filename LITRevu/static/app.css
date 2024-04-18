@@ -8,7 +8,7 @@
 
 body, html{
     color: #f1f1f1;
-    height: 100%;
+    /* height: 100%; */
     margin: 0 auto;
     max-width: 1100px;
     background: #051923;
@@ -19,6 +19,7 @@ body, html{
 
 .Content-menu-base{
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 1.2rem 32px ;
     background-color: #1d3557;
@@ -41,6 +42,16 @@ body, html{
     text-decoration: none;
 
 }
+
+.base_deconnecter button{
+    color: #f1f1f1;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+
 /* Container signup */
 .signup-container-rediredirect h2{
     font-size: clamp(18px, 4vw, 26px);
@@ -67,7 +78,7 @@ body, html{
     display: flex;
     justify-content: center;
 }
-.signup-container {
+.signup-container{
     height: 80%;
     display: flex;
     align-items: center;
@@ -98,29 +109,38 @@ body, html{
 }
 
 
-.container_login h2{
+.container_login h2, 
+.container_followUser h2,
+.contianer_createTicket h2{
     text-align: center;
     padding: clamp(10px, 0%, 10px) 0 10px;
     font-size: clamp(16px, 2vw, 20px);
 }
-
+.container_login-inputLabel label,
+.signup-container_inputLabel label{
+    display: flex;
+}
 #id_username,
 #id_password, 
 .signup-containe, 
-form p select, input{
+form p textarea, select, input{
     width: 340px;
     outline: none;
-    margin: .3rem 0;
-    padding: 10px 10px ;
+    margin: .5rem 0;
+    padding: 10px 10px;
     border-radius: 8px;
-    border: 1px solid #111;
+    font-size: clamp(14px, 2vw, 16px);
+    border: 1px solid #f1f1f1;
 }
+
 .signup-button-content, 
 .button-content{
     display: flex;
     justify-content: center;
     padding: clamp(10px, 0%, 20px) 0 0;
 }
+.container_followUser button,
+.contianer_createTicket button,
 .signup-button-content button, 
 .container_login
 button{
@@ -134,7 +154,67 @@ button{
     transition: .5s all;
     font-size: clamp(14px, 2vw, 16px);
 }
+.container_followUser ul a:hover,
+.container_followUser button:hover,
+.contianer_createTicket button:hover,
 .signup-button-content button:hover,
 .container_login button:hover{
     background: #0466cf;
+}
+.container_followUser,
+.contianer_createTicket,
+.container_home{
+    /* height: 80%; */
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* .container_home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+} */
+.container_home p, h2{
+    margin: 10px 0;
+}
+.container_home img{
+    width: 60%;
+    border-radius: 10px;
+}
+.container_followUser form p label,
+.contianer_createTicket form p label{
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0 0;
+}
+
+.container_followUser h2{
+    margin-top: 2rem;
+    /* margin-top: 8rem; */
+}
+.container_followUser ul{
+    width: 70%;
+    height: 20%;
+    list-style: none;
+    border-radius: 6px;
+    border: 1px solid #f1f1f1;
+}
+.container_followUser ul a{
+    color: #f1f1f1;
+    text-decoration: none;
+    padding: 8px 8px;
+    /* border-radius: 6px; */
+    background: #007bff;
+    transition: .5s all;
+}
+.container_followUser ul li {
+    padding: 8px 8px;
+}
+.container_followUser .unfollow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

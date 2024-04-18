@@ -11,18 +11,20 @@
 
 <div class="signup-container">
 
-    <form action="" method="post">
+    <form method="post">
         <h2>Inscription</h2>
-    
-        {{ form.as_p }}
-        {% csrf_token %}
-    
+
+        <div class="signup-container_inputLabel">
+            {{ form.as_p }}
+            {% csrf_token %}
+        </div>
+
         <div class="signup-button-content">
             <button type="submit">S'inscrire</button>
         </div>
         <p class="rediredirect-login"><a class href="{% url 'login' %}">Revenir à la page de connexion</a></p>
     </form>
-    
+
 </div>
 
 {% endblock content %}
