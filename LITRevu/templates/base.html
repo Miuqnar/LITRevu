@@ -1,12 +1,12 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!--<!DOCTYPE html>-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LITRevu</title>
-    <link rel="stylesheet" href="{% static 'authentication/style.css' %}">
+    <link rel="stylesheet" href="{% static 'app.css' %}">
     
 </head>
 <body>
@@ -16,10 +16,21 @@
       <div class="Content-menu-base_item">
 
         {% if user.is_authenticated %}
-          <p><a href="">Flux</a></p>
-          <p><a href="">Posts</a></p>
-          <p><a href="">Abonnements</a></p>
-          <p><a href="{% url 'logout' %}">Se deconnecter</a></p>
+          <p><a href="{% url 'home' %}">Flux</a></p>
+          <p><a href="{% url 'create_ticket' %}">Posts</a></p>
+          <p><a href="{% url 'follower_user' %}">Abonnements</a></p>
+
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+
+            <div class="base_deconnecter">
+              <button type="submit">Se deconnecter</button>
+            </div>
+          </form>
+        
+
+          {% comment %} <p><a href="{% url 'logout' %}">Se deconnecter</a></p> {% endcomment %}
+
         {% endif %}
         
       </div>
