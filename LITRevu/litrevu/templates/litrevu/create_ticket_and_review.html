@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="contianer_create-review">
+
+        <h2>Créer une critique</h2>
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <fieldset>
+                <legend>Informations sur le ticket</legend>
+                {{ form.as_p }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Informations sur la critique</legend>
+                {{ review_form.as_p }}
+            </fieldset>
+        
+            <div class="button-content">
+                <button type="submit">Valider</button>
+            </div>
+
+        </form>
+    </div>
+    
+
+{% endblock content %}

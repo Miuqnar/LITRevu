@@ -108,10 +108,12 @@ body, html{
     padding: 0 clamp(10px, 12vw, 120px);
 }
 
-
+.delete_ticket h2,
 .container_login h2, 
 .container_followUser h2,
-.contianer_createTicket h2{
+.contianer_createTicket h2,
+.contianer_create-review h2,
+.contianer_review h2{
     text-align: center;
     padding: clamp(10px, 0%, 10px) 0 10px;
     font-size: clamp(16px, 2vw, 20px);
@@ -139,9 +141,13 @@ form p textarea, select, input{
     justify-content: center;
     padding: clamp(10px, 0%, 20px) 0 0;
 }
+
+.delete_ticket button,
 .container_followUser button,
 .contianer_createTicket button,
 .signup-button-content button, 
+.contianer_review button,
+.contianer_create-review button,
 .container_login
 button{
     color: #f1f1f1;
@@ -154,15 +160,36 @@ button{
     transition: .5s all;
     font-size: clamp(14px, 2vw, 16px);
 }
+.button-content .redict_home{
+    color: #f1f1f1;
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: #b80505;
+    text-decoration: none;
+    margin: 0 auto 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(14px, 2vw, 16px);
+}
+.delete_ticket button:hover,
 .container_followUser ul a:hover,
 .container_followUser button:hover,
 .contianer_createTicket button:hover,
 .signup-button-content button:hover,
+.contianer_review button:hover,
+.contianer_create-review button:hover,
 .container_login button:hover{
     background: #0466cf;
 }
+
 .container_followUser,
 .contianer_createTicket,
+.contianer_create-review,
+.contianer_review,
+.delete_ticket,
 .container_home{
     /* height: 80%; */
     margin-top: 4rem;
@@ -171,29 +198,75 @@ button{
     align-items: center;
     justify-content: center;
 }
-/* .container_home{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-} */
-.container_home p, h2{
-    margin: 10px 0;
+.container_home{
+    margin-top: 1rem;
 }
-.container_home img{
-    width: 60%;
+
+.contianer_create-review fieldset{
+    padding: 2rem;
+    margin: 2rem 0;
+}
+.contianer_review, 
+.contianer_create-review {
+    margin: 0 0 4rem;
+}
+.contianer_review-item{
+    max-width: 60%;
+    height: 50vh;
+    padding: 1rem 1rem;
+    border: 1px solid #f1f1f1;
+}
+.container_home-item-ticket{
+    background: #14263d;
+    width: 600px;
+    padding: .5rem .5rem .5rem .5rem;
+}
+.container_home-item-modify{
+    padding: 1rem 1rem;
+    border-radius: 8px;
+    background: -webkit-linear-gradient(left, #020102, #101e31);
+}
+.container_home-item-modify 
+.container-ticket_button{
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+}
+.container-ticket_button 
+.item-button{
+    margin: 0 0 12px 10px;
+}
+.container-ticket_button 
+.item-button a{
+    color: #f1f1f1;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 1px solid #f1f1f1;
+    padding: 5px 8px;
+}
+.contianer_review-item p{
+    padding: .5rem 0;
+}
+.container_home-item-ticket img,
+.contianer_review img{
+    width: 50%;
+    padding-top: 1rem;
     border-radius: 10px;
 }
+.container_home-item-ticket p, h2{
+    margin: 10px 0;
+}
+
 .container_followUser form p label,
-.contianer_createTicket form p label{
+.contianer_createTicket form p label,
+.contianer_create-review form p label,
+.contianer_review p label{
     display: flex;
     flex-direction: column;
     padding: 15px 0 0;
 }
-
 .container_followUser h2{
     margin-top: 2rem;
-    /* margin-top: 8rem; */
 }
 .container_followUser ul{
     width: 70%;
@@ -217,4 +290,13 @@ button{
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.delete_ticket h2{
+    margin: -1rem;
+}
+.delete_ticket p{
+    margin: 1.5rem;
+}
+.delete_ticket img{
+    width: 50%;
 }

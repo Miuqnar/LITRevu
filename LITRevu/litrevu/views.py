@@ -1,13 +1,14 @@
-from django.views import View
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView
 
 
 from LITRevu.litrevu import forms, models
-from LITRevu.authentication.models import User
 from LITRevu.litrevu.models import Ticket, UserFollows
-
 
 
 # Restreigner l’accès à la page d’accueil
@@ -16,93 +17,130 @@ def home(request):
     tickets = models.Ticket.objects.all()
     return render(request, 'litrevu/home.html', context={'tickets': tickets})
 
-class TicketCreateView(LoginRequiredMixin, View):
+
+class TicketCreateView(LoginRequiredMixin, CreateView):
     template_name = 'litrevu/create_ticket.html'
     form_class = forms.TicketForm
-    
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, context={'form': form})
-    
-    def post(self, request):
-            form = self.form_class(request.POST, request.FILES)
-            if form.is_valid():
-                ticket = form.save(commit=False)
-                ticket.user = request.user
-                ticket.save()
-                return redirect('home')
-            return render(request, self.template_name, context={'form': form})
-                
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
-class FollowUserView(LoginRequiredMixin, View):
+class FollowUserView(LoginRequiredMixin, CreateView):
+    template_name = 'litrevu/follower_user.html'
+    # model = UserFollows
+    form_class = forms.FollowUserForm
+    success_url = reverse_lazy('follower_user')
+
+    def get_form_kwargs(self):
+        kwargs = super(FollowUserView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['following'] = self.request.user.following.all()
+        context['followed_users'] = self.request.user.followed_by.all()
+        return context
+
+
+class UnfollowUserView(LoginRequiredMixin, DeleteView):
     template_name = 'litrevu/follower_user.html'
     form_class = forms.FollowUserForm
-    
-    def get(self, request):
-        form = self.form_class()
-        following = request.user.following.all()
-        followers = request.user.followed_by.all()
-        return render(request, self.template_name, context={'form': form, 'following': following, 'followed_users': followers})
-    
+    success_url = reverse_lazy('follower_user')
 
-    def post(self, request):
-        form = self.form_class(request.POST)
-        message = ''
-        if form.is_valid():
-            followed_username = form.cleaned_data['username']
-            followed_user = User.objects.get(username=followed_username)
-            
-            if followed_user == request.user:
-                message = "Vous ne pouvez pas vous suivre vous-même."
-                return redirect('follower_user')
-            elif UserFollows.objects.filter(user=request.user, followed_user=followed_user).exists():
-                message = f"Vous suivez déjà {followed_username}"
-                return redirect('follower_user')
-            else:
-                user_follows = UserFollows(user=request.user, followed_user=followed_user)
-                user_follows.save()
-                return redirect('follower_user')
-        return render(request, self.template_name, context={'form': form, 'message': message})
+    def get_object(self, queryset=None):
+        user_id = self.kwargs.get('user_id')
+        return UserFollows.objects.get(pk=user_id)
 
-        
-
-class UnfollowUserView(LoginRequiredMixin, View):
-    form_class = forms.FollowUserForm
-    
-    def get(self, request, user_id):
-        user_to_unfollow = UserFollows.objects.get(pk=user_id)
-        user_to_unfollow.delete()
-        return redirect('follower_user')
-    
-    def post(self, request, user_id):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user_to_unfollow = UserFollows.objects.get(pk=user_id)
-            user_to_unfollow.delete()
-        return redirect('follower_user')
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 
-
-class ReviewCreateView(LoginRequiredMixin, View):
-    template_name = 'litrevu/create_review.html'
+class ReviewCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'litrevu/ticket-review.html'
     form_class = forms.ReviewForm
+    success_url = reverse_lazy('home') 
+
+    def form_valid(self, form):
+        form.instance.ticket = self.ticket
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ticket'] = self.ticket
+        return context
     
-    def get(self, request, ticket_id):
-        ticket = Ticket.objects.get(pk=ticket_id)
-        form = self.form_class(initial={'ticket': ticket})
-        return render(request, self.template_name, context={'form': form})
+    def dispatch(self, *args, **kwargs):
+        self.ticket = Ticket.objects.get(id=self.kwargs['ticket_id'])
+        return super().dispatch(*args, **kwargs)
+
     
-    def post(self, request, ticket_id):
-        ticket = Ticket.objects.get(pk=ticket_id)
-        form =  self.form_class(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.ticket = ticket
-            review.user = request.user
-            review.save()
-            return redirect('home')
-        return render(request, self.template_name, context={'form': form, 'ticket': ticket})
+# class ReviewCreateView(LoginRequiredMixin, View):
+#     template_name = 'litrevu/ticket-review.html'
+#     form_class = forms.ReviewForm
+
+#     def get(self, request, ticket_id):
+#         ticket = Ticket.objects.get(pk=ticket_id)
+#         form = self.form_class()
+#         return render(request, self.template_name, context={'form': form, 'ticket': ticket})
+
+#     def post(self, request, ticket_id):
+#         ticket = Ticket.objects.get(pk=ticket_id)
+#         form = self.form_class(request.POST)
+#         if form.is_valid():
+#             review = form.save(commit=False)
+#             review.ticket = ticket
+#             review.user = request.user
+#             review.save()
+#             return redirect('home')
+#         return render(request, self.template_name, context={'form': form, 'ticket': ticket})
+
+
+class CreateTicketAndReviewView(LoginRequiredMixin, CreateView):
+    model = Ticket
+    template_name = 'litrevu/create_ticket_and_review.html'
+    form_class = forms.TicketForm
+    review_form_class = forms.ReviewForm
+    success_url = reverse_lazy('home') 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_form'] = self.review_form_class()
+        return context
+
+    def form_valid(self, form):
+        review_form = self.review_form_class(self.request.POST)
+        self.object = form.save(commit=False)
+        # usuário do ticket /  self.object.user = self.request.user  
+        form.instance.user = self.request.user
+        self.object.user = self.request.user  
+        self.object.save()
+        review = review_form.save(commit=False)
+        review.ticket = self.object
+        # usuário da crítica / review.user = self.request.user  
+        review.user = self.request.user  
+        review.save()
+        return super().form_valid(form)
+
     
+
+class UpdateTicketView(LoginRequiredMixin, UpdateView):
+    model = Ticket 
+    template_name = 'litrevu/update_ticket.html'
+    form_class = forms.TicketForm
+    success_url = reverse_lazy('home') 
     
-    
+    def get_object(self, queryset=None):
+        ticket_id = self.kwargs.get('update_id')
+        return Ticket.objects.get(id=ticket_id)
+
+
+class DeleteTicketView(LoginRequiredMixin, DeleteView):
+    model = Ticket
+    template_name = 'litrevu/delete_ticket.html'
+    form_class = forms.TicketForm
+    success_url = reverse_lazy('home')
