@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    
+    <div class="delete_ticket">
+        <p>Ticket {{ ticket.user }}</p>
+        <h2>{{ ticket.title }}</h2>
+        <p>{{ ticket.description }}</p>
+        <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" >
+    
+
+    <p>Êtes vous sûr de vouloir supprimer le ticket id: {{ ticket.id }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Supprimer</button>
+    </form>
+
+</div>
+
+</div>
+
+{% endblock content %}

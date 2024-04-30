@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="contianer_review">
+    <h2>Vous êtes en train de poster en réponse au ticket: {{ ticket.user }}</h2>
+
+    <div class="contianer_review-item">
+        <p>{{ ticket.user }} : a demandé une critique</p>
+        <p>{{ ticket.title }}</p>
+        <img src="{{ ticket.image.url }}">
+    </div>
+
+
+    <form method="post">
+<!-- radio_buttons.html -->
+        {% for radio in widget %}
+            <label>
+                {{ radio }}
+                {{ radio.choice_value }}
+            </label>
+        {% endfor %}
+        
+        {{ form.as_p }}
+        {% csrf_token %}
+
+        <div class="button-content">
+            <button type="submit">Valider</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+{% endblock content %}

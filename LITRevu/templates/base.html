@@ -22,7 +22,6 @@
 
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
-
             <div class="base_deconnecter">
               <button type="submit">Se deconnecter</button>
             </div>
@@ -36,7 +35,10 @@
       </div>
 
     </div>
-    {% block content %}{% endblock content %}
-    
+    {% comment %} {% block content %}{% endblock content %} {% endcomment %}
+    <div class="main">
+      {% block content %}{% endblock content %}
+    </div>
+
 </body>
 </html>

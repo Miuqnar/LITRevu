@@ -21,13 +21,14 @@
             {% for user in following %}
                 <div class="unfollow">
                     <li>{{ user.followed_user.username }}</li>
-                    <a href="{% url 'unfollow_user' user.id %}">Désabonner</a>
+                    <a href="{% url 'unfollow_user' user_id=user.id %}">Désabonner</a>
                 </div>
             {% endfor %}
         </ul>
     
         <h2>Abonnés</h2>
         <ul>
+            {% comment %} for follower_user in user.followed_by.all {% endcomment %}
             {% for follower in followed_users %}
                 <li>{{ follower.user.username }}</li>
             {% endfor %}
