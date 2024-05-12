@@ -323,7 +323,13 @@ button{
     width: 50%;
 }
 
-
+.UserContect p{
+    text-align: center;
+    margin-top: 2rem;
+}
+.UserContect .user{
+    color: #00ff00;
+}
 .star {
     cursor: pointer;
     font-size: 18px;

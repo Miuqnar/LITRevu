@@ -22,4 +22,3 @@ urlpatterns = [
     path('', include('LITRevu.authentication.urls')),
     path('', include('LITRevu.litrevu.urls')),
 ]
-

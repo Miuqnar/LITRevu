@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -18,12 +18,14 @@ from LITRevu.litrevu.models import Ticket, UserFollows
 @login_required
 def page_post(request):
     tickets = models.Ticket.objects.filter(user=request.user)
-    return render(request, 'litrevu/page_post.html', context={'tickets': tickets})
+    return render(request, 'litrevu/page_post.html',
+                  context={'tickets': tickets})
 
 
 @login_required
 def feed(request):
-    followed_user_ids = request.user.following.values_list('followed_user', flat=True)
+    followed_user_ids = request.user.following.values_list('followed_user',
+                                                           flat=True)
 
     reviews = models.Review.objects.filter(user__in=followed_user_ids)
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
@@ -38,7 +40,9 @@ def feed(request):
     )
 
     # Renderiza o template com os posts paginados
-    return render(request, 'litrevu/feed.html', {'posts': posts})
+    return render(request,
+                  'litrevu/feed.html',
+                  {'posts': posts})
 
 
 class TicketCreateView(LoginRequiredMixin, CreateView):
@@ -99,20 +103,16 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         user_reviews = models.Review.objects.filter(
             Q(user=self.request.user) |
             Q(ticket__user=self.request.user) |
-            Q(user__in=UserFollows.objects.filter(followed_user=self.request.user).values('user'))
-            # Q(user__followed_by=self.request.user)   
+            Q(user__in=UserFollows.objects.filter(
+                followed_user=self.request.user).values('user'))
+            # Q(user__followed_by=self.request.user)
         )
 
         context['reviews'] = user_reviews
         context['ticket'] = self.ticket
         context['stars'] = range(1, 6)
-        print("Stars:", context['stars']) 
+        print("Stars:", context['stars'])
         return context
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # context['ticket'] = self.ticket
-    #     # return context
 
     def dispatch(self, *args, **kwargs):
         self.ticket = Ticket.objects.get(id=self.kwargs['ticket_id'])
@@ -134,13 +134,11 @@ class CreateTicketAndReviewView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         review_form = self.review_form_class(self.request.POST)
         self.object = form.save(commit=False)
-        # usuário do ticket /  self.object.user = self.request.user  
         form.instance.user = self.request.user
         self.object.user = self.request.user
         self.object.save()
         review = review_form.save(commit=False)
         review.ticket = self.object
-        # usuário da crítica / review.user = self.request.user  
         review.user = self.request.user
         review.save()
         return super().form_valid(form)
@@ -156,25 +154,15 @@ class UpdateTicketView(LoginRequiredMixin, UpdateView):
         ticket_id = self.kwargs.get('update_id')
         return get_object_or_404(Ticket, id=ticket_id, user=self.request.user)
 
-# FIXME: class DeleteTicketView nao funciona
+
+# [x]: verifiée
 class DeleteTicketView(LoginRequiredMixin, DeleteView):
     model = Ticket
     template_name = 'litrevu/delete_ticket.html'
-    form_class = forms.TicketForm
     success_url = reverse_lazy('feed')
 
-    # def get_object(self, queryset=None):
-    #     obj = super().get_object(queryset)
-    #     if obj.user != self.request.user:
-    #         raise Http404
-    #     return obj
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     # Verificar se o usuário tem permissão para deletar o ticket
-    #     ticket_id = kwargs.get('pk')
-    #     ticket = get_object_or_404(Ticket, id=ticket_id, user=request.user)
-
-    #     # Se o usuário não for o proprietário do ticket, retorne um erro 404
-    #     if ticket.user != request.user:
-    #         raise Http404
-    #     return super().dispatch(request, *args, **kwargs)
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise Http404
+        return obj
