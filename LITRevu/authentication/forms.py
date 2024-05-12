@@ -5,8 +5,14 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=64, widget=forms.TextInput(attrs={'placeholder': 'Nom d’utilisateur'}), label='')
-    password = forms.CharField(max_length=64, widget=forms.PasswordInput(attrs={'placeholder': 'Mot de passe'}), label='')
+    username = forms.CharField(max_length=64, widget=forms.TextInput(
+        attrs={
+            'placeholder': 'Nom d’utilisateur'
+        }), label='')
+    password = forms.CharField(max_length=64, widget=forms.PasswordInput(
+        attrs={
+            'placeholder': 'Mot de passe'
+        }), label='')
 
 
 class SignupForm(UserCreationForm):
@@ -15,15 +21,18 @@ class SignupForm(UserCreationForm):
         for field_name in self.fields:
             self.fields[field_name].help_text = ''
             self.fields[field_name].label = ''
-        # self.fields['username'].label = 'Nom d’utilisateur'
-        # self.fields['password1'].label = 'Mot de passe'
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': 'Mot de passe'})
-        # self.fields['password2'].label = 'Confirme le mot de passe'
-        self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Confirme le mot de passe'})
+        self.fields['password1'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'Mot de passe'}
+        )
+        self.fields['password2'].widget = forms.PasswordInput(
+            attrs={'placeholder': 'Confirme le mot de passe'}
+        )
 
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = ['username']
         widgets = {
-            'username': forms.TextInput(attrs={'placeholder': 'Nom d’utilisateur'}),
+            'username': forms.TextInput(
+                attrs={'placeholder': 'Nom d’utilisateur'}
+            ),
         }

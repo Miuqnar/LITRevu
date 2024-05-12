@@ -15,7 +15,8 @@ class LoginPageView(View):
             return redirect(settings.LOGIN_REDIRECT_URL)
         form = self.form_class()
         message = ''
-        return render(request, self.template_name, context={'form': form, 'message': message})
+        return render(request, self.template_name,
+                      context={'form': form, 'message': message})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -29,7 +30,8 @@ class LoginPageView(View):
                 login(request, user)
                 return redirect('feed')
         message = 'Identifiant invalide.'
-        return render(request, self.template_name, context={'form': form, 'message': message})
+        return render(request, self.template_name,
+                      context={'form': form, 'message': message})
 
 
 class SignupPageView(View):
@@ -50,4 +52,3 @@ class SignupPageView(View):
             login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
         return render(request, self.template_name, context={'form': form})
-
