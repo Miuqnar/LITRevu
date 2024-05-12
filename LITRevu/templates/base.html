@@ -7,17 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LITRevu</title>
     <link rel="stylesheet" href="{% static 'app.css' %}">
-    
+    <script src="{% static 'index.js' %}"></script>
 </head>
 <body>
     <div class="Content-menu-base">
-      <nav class="title_page_base"><a href="{% url 'home' %}">LITReview</a></nav>
+      <nav class="title_page_base"><a href="{% url 'feed' %}">LITReview</a></nav>
 
       <div class="Content-menu-base_item">
 
         {% if user.is_authenticated %}
-          <p><a href="{% url 'home' %}">Flux</a></p>
-          <p><a href="{% url 'create_ticket' %}">Posts</a></p>
+          <p><a href="{% url 'feed' %}">Flux</a></p>
+          <p><a href="{% url 'page_post' %}">Posts</a></p>
           <p><a href="{% url 'follower_user' %}">Abonnements</a></p>
 
           <form method="post" action="{% url 'logout' %}">

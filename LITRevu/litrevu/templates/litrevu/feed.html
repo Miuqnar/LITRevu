@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <p>{{user}} Vous êtes connecté</p>
+    <div class="container-critique">
+        <div class="item-button">
+            <a href="{% url 'create_ticket' %}">Demander une critique</a>
+        </div>
+        <div class="item-button">
+            <a href="{% url 'create_ticket_and_review' %}">Créer une critique</a>
+        </div>
+    </div>
+    <div class="container_home">
+        {% for item in posts  %}
+            {% if item.content_type == 'TICKET' %}
+                {% include "litrevu/ticket_snippet.html" with post=item %}
+
+            {% elif item.content_type == 'REVIEW' %}
+                {% include "litrevu/ticket_snippet.html" with post=item.ticket %}
+            {% endif %}
+            
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+
+
+
+        

@@ -2,12 +2,13 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from LITRevu.litrevu.views import home, TicketCreateView, FollowUserView, \
+from LITRevu.litrevu.views import feed, page_post, TicketCreateView, FollowUserView, \
     UnfollowUserView, ReviewCreateView, CreateTicketAndReviewView, UpdateTicketView, \
     DeleteTicketView
 
 urlpatterns = [
-    path('home/', home, name='home'),
+    path('feed/', feed, name='feed'),
+    path('page_post/', page_post, name='page_post'),
     path('create_ticket/', TicketCreateView.as_view(), name='create_ticket'),
     path('follower_user/', FollowUserView.as_view(), name='follower_user'),
     path('unfollow/<int:user_id>/', UnfollowUserView.as_view(), name='unfollow_user'),
@@ -19,5 +20,3 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-

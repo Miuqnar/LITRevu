@@ -9,9 +9,18 @@ class Ticket(models.Model):
     description = models.TextField(max_length=2048, blank=True, verbose_name='description')
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
+    time_created = models.DateTimeField(auto_now_add=True)
+    
+    def has_review(self):
+        return self.review_set.exists()
+    
+    @property 
+    def review(self):
+        return self.review_set.first()
 
 
 class Review(models.Model):
+    objects = None
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
         # validates that rating must be between 0 and 5
@@ -20,7 +29,7 @@ class Review(models.Model):
     body = models.TextField(max_length=8192, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
-
+    
 
 class UserFollows(models.Model):
     objects = None

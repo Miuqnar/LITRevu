@@ -2,12 +2,14 @@
 
 {% block content %}
 <div class="contianer_review">
-    <h2>Vous êtes en train de poster en réponse au ticket: {{ ticket.user }}</h2>
+    <h2>Vous êtes en train de demander une critique pour le ticket: {{ ticket.user }}</h2>
 
     <div class="contianer_review-item">
-        <p>{{ ticket.user }} : a demandé une critique</p>
+        <p>Ticket: {{ ticket.user }} </p>
         <p>{{ ticket.title }}</p>
-        <img src="{{ ticket.image.url }}">
+        {% if ticket.image %}
+            <img src="{{ ticket.image.url }}">
+        {% endif %}
     </div>
 
 
@@ -15,11 +17,11 @@
 <!-- radio_buttons.html -->
         {% for radio in widget %}
             <label>
-                {{ radio }}
                 {{ radio.choice_value }}
+                <input type="checkbox" name="" id="">
             </label>
         {% endfor %}
-        
+            
         {{ form.as_p }}
         {% csrf_token %}
 
