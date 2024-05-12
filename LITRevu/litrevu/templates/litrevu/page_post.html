@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container_home">
+        {% for post in tickets  %}
+            {% include "litrevu/ticket_snippet.html" %}
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+

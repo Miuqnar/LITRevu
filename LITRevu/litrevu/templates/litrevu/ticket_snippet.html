@@ -1,0 +1,53 @@
+<div class="container_home-item-ticket">
+    <div class="container_home-item-modify">
+
+        {% if post.has_review %}
+            <div class="container-feed_post">
+                <div class="feed_post-item">
+                    <p>Ticket: {{ post.review.user }}</p>
+                    <p>
+                        {{ post.review.headline }} -
+                
+                        {% for star in "12345" %}
+                            {% if forloop.counter <= post.review.rating %}
+                                <span class="star filled">&#9733;</span>
+                            {% else %}
+                                <span class="star">&#9733;</span>
+                            {% endif %}
+                        {% endfor %}
+                
+                    <p>{{ post.review.body }}</p>
+                </div>
+                <div class="feed_post-item_timeCreated">
+                    <p>{{ post.review.time_created }}</p>
+                </div>
+            </div>
+
+        {% endif %}
+
+        <div class="container_critique_and_post">
+            <p>Ticket: {{ post.user }} - <span>{{ post.time_created }}</span></p>
+            <h2>{{ post.title }}</h2>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" >
+            {% endif %}
+            <p>{{ post.description }}</p>
+            <div class="container-ticket_button">
+                {% if not post.has_review %}
+                    <div class="item-button">
+                        <a href="{% url 'ticket-review' ticket_id=post.id %}">Créer une critique</a>
+                    </div>
+                {% endif %}
+                {% if post.user == request.user %}
+                    <div class="item-button">
+                        <a href="{% url 'update-ticket' update_id=post.id %}">Modifier</a>
+                    </div>
+                    <div class="item-button">
+                        <a href="{% url 'delete-ticket' pk=post.id %}">Supprimer</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+

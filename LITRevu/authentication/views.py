@@ -27,7 +27,7 @@ class LoginPageView(View):
             )
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('feed')
         message = 'Identifiant invalide.'
         return render(request, self.template_name, context={'form': form, 'message': message})
 

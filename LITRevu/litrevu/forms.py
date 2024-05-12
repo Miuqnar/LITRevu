@@ -6,9 +6,16 @@ from LITRevu.authentication.models import User
 
 
 class TicketForm(forms.ModelForm):
+    
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+        self.fields['title'].label = "Titre"
+        self.fields['title'].label = "Titre"
+        
     class Meta:
         model = Ticket
         fields = ('title', 'description', 'image')
+        
 
 # class TicketReviewForm(forms.ModelForm):
 #     rating = forms.ChoiceField()

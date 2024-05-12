@@ -132,7 +132,7 @@ AUTH_USER_MODEL = 'authentication.user'
 # Restreigner l’accès à la page d’accueil
 LOGIN_URL = 'login'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'feed'
 LOGOUT_REDIRECT_URL = LOGIN_URL
 
 MEDIA_URL = '/media/'

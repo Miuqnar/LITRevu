@@ -5,17 +5,10 @@
     <div class="contianer_createTicket">
         <h2>Créer un ticket</h2>
         <form method="post" enctype="multipart/form-data">
-            {% comment %} <div class="update_ticket-img">
-                <img src="{{ ticket.image.url }}" alt="Image">
-            </div> {% endcomment %}
-        
             {{ form.as_p }}
             {% csrf_token %}
-
-           
-            
             <div class="button-content">
-                <button type="submit">Modifier</button> <a class="redict_home" href="{% url 'home' %}">Anular</a>
+                <button type="submit">Modifier</button> <a class="redict_home" href="{% url 'feed' %}">Annuler</a>
             </div>
         </form>
     </div>
