@@ -17,6 +17,8 @@ from LITRevu.litrevu.models import Ticket, UserFollows
 
 @login_required
 def page_post(request):
+    """Vue pour la page des publications de l'utilisateur."""
+    
     tickets = models.Ticket.objects.filter(user=request.user)
     return render(request, 'litrevu/page_post.html',
                   context={'tickets': tickets})
@@ -24,6 +26,8 @@ def page_post(request):
 
 @login_required
 def feed(request):
+    """Vue pour le flux d'actualités."""
+    
     followed_user_ids = request.user.following.values_list('followed_user',
                                                            flat=True)
 
@@ -46,6 +50,8 @@ def feed(request):
 
 
 class TicketCreateView(LoginRequiredMixin, CreateView):
+    """Vue pour créer un ticket."""
+    
     template_name = 'litrevu/create_ticket.html'
     form_class = forms.TicketForm
     success_url = reverse_lazy('feed')
@@ -56,6 +62,8 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 
 
 class FollowUserView(LoginRequiredMixin, CreateView):
+    """Vue pour suivre un utilisateur."""
+    
     template_name = 'litrevu/follower_user.html'
     # model = UserFollows
     form_class = forms.FollowUserForm
@@ -74,6 +82,8 @@ class FollowUserView(LoginRequiredMixin, CreateView):
 
 
 class UnfollowUserView(LoginRequiredMixin, DeleteView):
+    """Vue pour ne plus suivre un utilisateur."""
+    
     template_name = 'litrevu/follower_user.html'
     form_class = forms.FollowUserForm
     success_url = reverse_lazy('follower_user')
@@ -87,6 +97,8 @@ class UnfollowUserView(LoginRequiredMixin, DeleteView):
 
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
+    """Vue pour créer une critique."""
+    
     template_name = 'litrevu/ticket-review.html'
     form_class = forms.ReviewForm
     success_url = reverse_lazy('feed')
@@ -120,6 +132,8 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
 
 class CreateTicketAndReviewView(LoginRequiredMixin, CreateView):
+    """Vue pour créer un ticket et une critique."""
+    
     model = Ticket
     template_name = 'litrevu/create_ticket_and_review.html'
     form_class = forms.TicketForm
@@ -145,6 +159,8 @@ class CreateTicketAndReviewView(LoginRequiredMixin, CreateView):
 
 
 class UpdateTicketView(LoginRequiredMixin, UpdateView):
+    """Vue pour mettre à jour un ticket."""
+    
     model = Ticket
     template_name = 'litrevu/update_ticket.html'
     form_class = forms.TicketForm
@@ -157,6 +173,8 @@ class UpdateTicketView(LoginRequiredMixin, UpdateView):
 
 # [x]: verifiée
 class DeleteTicketView(LoginRequiredMixin, DeleteView):
+    """Vue pour supprimer un ticket."""
+    
     model = Ticket
     template_name = 'litrevu/delete_ticket.html'
     success_url = reverse_lazy('feed')
