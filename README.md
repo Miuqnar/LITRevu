@@ -33,7 +33,7 @@ cd LITRevu
 ```
 * Lancez le serveur
 ```bash
-Python3 manage.py runserver
+Python manage.py runserver
 ```
 
 
